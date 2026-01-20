@@ -1,2 +1,2 @@
-# Wiki-
-Document storage repository 
+# Вики проекта КЦТHack 
+тут ты можешь найти все нужные тебе документы. 
