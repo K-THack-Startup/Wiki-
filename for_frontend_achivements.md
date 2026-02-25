@@ -2,9 +2,13 @@
 
 ### 
 
+
+
 ### ***1. Получить все ачивки:***
 
 **GET /api/achievements**
+
+
 
 
 
@@ -17,12 +21,11 @@
 
 
 *{*
-
-    *"byType": "ID",*
-
-    *"value": "user123"*
-
+*"byType": "ID",*
+*"value": "user123"*
 *}*
+
+
 
 
 
@@ -35,12 +38,11 @@
 
 
 *{*
-
-    *"byType": "achievement",*
-
-    *"value": "1"*
-
+*"byType": "achievement",*
+*"value": "1"*
 *}*
+
+
 
 
 
@@ -53,12 +55,11 @@
 
 
 *{*
-
-    *"byType": "ID",*
-
-    *"value": "user123"*
-
+*"byType": "ID",*
+*"value": "user123"*
 *}*
+
+
 
 
 
@@ -71,10 +72,10 @@
 
 
 *{*
-
-    *"byType": "visited\_hackathons"*
-
+*"byType": "visited\_hackathons",*
 *}*
+
+
 
 
 
@@ -87,9 +88,93 @@
 
 
 *{*
-
-    *"byType": "points"*
-
+*"byType": "points",*
 *}*
 
 
+
+
+
+### ***7. Сбросить данные пользователя:***
+
+**Пример:**
+
+*DELETE /api/reset/user123*
+
+
+### Хакатоны пользователя
+
+**1. Создать запись об участии:**
+```
+POST /api/user-hackathons
+Content-Type: application/json
+
+{
+    "userId": "user123",
+    "hackathonId": "hackathon456",
+    "hackathonName": "Spring Hackathon 2026"
+}
+```
+
+**2. Подтвердить участие и выставить баллы (судья):**
+```
+PUT /api/user-hackathons/{id}/approve
+Content-Type: application/json
+
+{
+    "points": 8,
+    "placement": 2,
+    "isWinner": true
+}
+```
+
+**3. Отклонить участие:**
+```
+PUT /api/user-hackathons/{id}/reject
+```
+
+**4. Получить все хакатоны пользователя:**
+```
+GET /api/user-hackathons/user/{userId}
+```
+
+**5. Получить неподтвержденные участия (для судьи):**
+```
+GET /api/user-hackathons/pending
+```
+
+**Ответ при создании участия:**
+```json
+{
+    "id": 1,
+    "userId": "user123",
+    "hackathonId": "hackathon456",
+    "hackathonName": "Spring Hackathon 2026",
+    "points": null,
+    "placement": null,
+    "isWinner": false,
+    "isApproved": false,
+    "processed": false,
+    "createdAt": "2026-02-12T10:30:00",
+    "approvedAt": null,
+    "processedAt": null
+}
+```
+
+**Ответ после approve:**
+```json
+{
+    "id": 1,
+    "userId": "user123",
+    "hackathonId": "hackathon456",
+    "hackathonName": "Spring Hackathon 2026",
+    "points": 8,
+    "placement": 2,
+    "isWinner": true,
+    "isApproved": true,
+    "processed": false,
+    "createdAt": "2026-02-12T10:30:00",
+    "approvedAt": "2026-02-12T10:35:00",
+    "processedAt": null
+}
+```
